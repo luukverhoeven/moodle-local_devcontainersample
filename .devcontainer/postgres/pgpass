@@ -1,0 +1,2 @@
+postgresdb:5432:postgres:root:root
+postgresdb:5432:moodle:root:root

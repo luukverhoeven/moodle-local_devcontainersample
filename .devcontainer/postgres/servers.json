@@ -1,0 +1,14 @@
+{
+    "Servers": {
+        "Postgres": {
+            "Name": "moodle",
+            "Port": 5432,
+            "Group": "Servers",
+            "SSLMode": "prefer",
+            "Username": "root",
+            "PassFile": "/pgpass",
+            "Host": "postgresdb",
+            "MaintenanceDB": "postgres"
+        }
+    }
+}

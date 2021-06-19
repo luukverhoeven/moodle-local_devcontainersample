@@ -1,0 +1,16 @@
+{
+    "name": "moodle",
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "moodle",
+    "workspaceFolder": "/var/www/html/local/devcontainersample", // Workspace directory in the container. /var/www/html/${plugin_type}/${plugin_root_directory}
+    "postCreateCommand": "composer install && chmod -R a+x scripts",
+    "extensions": [
+        "editorconfig.editorconfig",
+        "wongjn.php-sniffer",
+        "bmewburn.vscode-intelephense-client",
+        "felixfbecker.php-debug",
+        "ms-azuretools.vscode-docker",
+        "dbaeumer.vscode-eslint",
+    ],
+    "settings": [],
+}

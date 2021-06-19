@@ -1,0 +1,52 @@
+version: '3'
+services:
+  postgresdb:
+    image: 'postgres'
+    environment:
+      - POSTGRES_DB=moodle
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    volumes:
+      - './container-volumes/postgresdb_data:/var/lib/postgresql/data'
+  pgadmin4:
+    image: 'dpage/pgadmin4'
+    ports:
+      - '8081:80'
+    volumes:
+      - './postgres/servers.json:/pgadmin4/servers.json'
+      - './postgres/pgpass:/tmp/pgpass'
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@example.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
+    depends_on:
+      - postgresdb
+    entrypoint: sh -c "
+      mkdir -m 700 -p /var/lib/pgadmin/storage/admin_example.com
+      && cp /tmp/pgpass /var/lib/pgadmin/storage/admin_example.com/pgpass
+      && chmod 600 /var/lib/pgadmin/storage/admin_example.com/pgpass
+      && /entrypoint.sh"
+  moodle:
+    build:
+      context: ./moodle
+      args:
+        - MOODLE_VERSION=v3.9.7
+    environment:
+      - MOODLE_DBTYPE=pgsql
+      - MOODLE_DBHOST=postgresdb
+      - MOODLE_DBNAME=moodle
+      - MOODLE_PREFIX=mdl_
+      - MOODLE_DBPORT=5432
+      - MOODLE_DBUSER=root
+      - MOODLE_DBPASSWORD=root
+      - MOODLE_WWWROOT_URL=http://localhost:8080
+    ports:
+      - '8080:80'
+    volumes:
+      - './moodle/php.ini:/usr/local/etc/php/php.ini'
+      - './moodle/config.php:/var/www/html/config.php'
+      - './container-volumes/moodledata_data:/var/www/moodledata'
+      - './container-volumes/phpu_moodledata_data:/var/www/phpu_moodledata'
+      - '..:/var/www/html/local/devcontainersample:cached' # Workspace directory in the container. /var/www/html/${plugin_type}/${plugin_root_directory}
+    depends_on:
+      - postgresdb
