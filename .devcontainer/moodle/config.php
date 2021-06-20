@@ -18,7 +18,7 @@ $CFG->dataroot = '/var/www/moodledata';
 $CFG->admin = 'admin';
 $CFG->unicodedb = true;
 $CFG->phpunit_prefix = 'test_';
-$CFG->phpunit_dataroot = '/var/www/phpu_moodledata';
+$CFG->phpunit_dataroot = '/var/www/phpunitdata';
 
 // NOT FOR PRODUCTION SERVERS!
 @error_reporting(E_ALL | E_STRICT);
