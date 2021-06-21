@@ -16,6 +16,11 @@ ENV TZ Asia/Tokyo
 RUN echo "${TZ}" > /etc/timezone \
    && dpkg-reconfigure -f noninteractive tzdata
 
+# Set locale
+RUN echo 'ja_JP.UTF-8 UTF-8' >> /etc/locale.gen \
+    && locale-gen \
+    && update-locale LANG=ja_JP.UTF-8
+
 # Install composer
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 
