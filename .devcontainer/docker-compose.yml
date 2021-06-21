@@ -3,7 +3,6 @@ services:
   mailhog:
     image: 'mailhog/mailhog'
     ports:
-      - '1025:1025'
       - '8025:8025'
   postgresdb:
     image: 'postgres'
@@ -45,6 +44,7 @@ services:
       - MOODLE_DBUSER=root
       - MOODLE_DBPASSWORD=root
       - MOODLE_WWWROOT_URL=http://localhost:8080
+      - MOODLE_SMTPHOSTS=mailhog:1025
     ports:
       - '8080:80'
     volumes:

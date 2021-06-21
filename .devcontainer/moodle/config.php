@@ -15,11 +15,15 @@ $CFG->dboptions = array(
 $CFG->wwwroot = getenv('MOODLE_WWWROOT_URL');
 $CFG->dirroot = '/var/www/html';
 $CFG->dataroot = '/var/www/moodledata';
-$CFG->lang = 'ja';
-$CFG->admin = 'admin';
 $CFG->unicodedb = true;
 $CFG->phpunit_prefix = 'test_';
 $CFG->phpunit_dataroot = '/var/www/phpunitdata';
+
+// Admin settings
+$CFG->lang = 'ja';
+$CFG->admin = 'admin';
+$CFG->noreplyaddress = 'noreply@example.com';
+$CFG->smtphosts = getenv('MOODLE_SMTPHOSTS');
 
 // NOT FOR PRODUCTION SERVERS!
 @error_reporting(E_ALL | E_STRICT);
