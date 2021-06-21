@@ -11,6 +11,11 @@ ENV MOODLE_PREFIX mdl_
 ENV MOODLE_DBPORT 3306
 ENV MOODLE_WWWROOT_URL http://localhost
 
+# Set timezone
+ENV TZ Asia/Tokyo
+RUN echo "${TZ}" > /etc/timezone \
+   && dpkg-reconfigure -f noninteractive tzdata
+
 # Install composer
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 
