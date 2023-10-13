@@ -20,7 +20,7 @@ $CFG->phpunit_prefix = 'test_';
 $CFG->phpunit_dataroot = '/var/www/phpunitdata';
 
 // Admin settings
-$CFG->lang = 'ja';
+$CFG->lang = 'en';
 $CFG->admin = 'admin';
 $CFG->noreplyaddress = 'noreply@example.com';
 $CFG->smtphosts = getenv('MOODLE_SMTPHOSTS');
