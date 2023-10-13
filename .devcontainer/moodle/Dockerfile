@@ -17,9 +17,9 @@ RUN echo "${TZ}" > /etc/timezone \
    && dpkg-reconfigure -f noninteractive tzdata
 
 # Set locale
-RUN echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen \
-    && locale-gen \
-    && update-locale LANG=en_US.UTF-8
+# RUN echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen \
+#    && locale-gen \
+#    && update-locale LANG=en_US.UTF-8
 
 # Install composer
 COPY --from=composer /usr/bin/composer /usr/bin/composer
