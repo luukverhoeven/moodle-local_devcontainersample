@@ -6,6 +6,8 @@ services:
       - '8025:8025'
   postgresdb:
     image: 'postgres'
+    ports:
+      - '5432:5432'
     environment:
       - POSTGRES_DB=moodle
       - POSTGRES_USER=root
