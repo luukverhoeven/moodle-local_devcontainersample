@@ -36,7 +36,7 @@ services:
     build:
       context: ./moodle
       args:
-        - MOODLE_VERSION=v3.9.7
+        - MOODLE_VERSION=v4.3.0
     environment:
       - MOODLE_DBTYPE=pgsql
       - MOODLE_DBHOST=postgresdb
