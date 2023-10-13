@@ -4,34 +4,19 @@ services:
     image: 'mailhog/mailhog'
     ports:
       - '8025:8025'
-  postgresdb:
-    image: 'postgres'
-    ports:
-      - '5432:5432'
+  mariadb:
+    image: mariadb:10.7
+    command: >
+              --character-set-server=utf8mb4
+              --collation-server=utf8mb4_bin
+              --innodb_file_per_table=On
+              --wait-timeout=28800
+              --skip-log-bin
     environment:
-      - POSTGRES_DB=moodle
-      - POSTGRES_USER=root
-      - POSTGRES_PASSWORD=root
-      - PGDATA=/var/lib/postgresql/data/pgdata
-    volumes:
-      - './container-volumes/postgresdb_data:/var/lib/postgresql/data'
-  pgadmin4:
-    image: 'dpage/pgadmin4'
-    ports:
-      - '8081:80'
-    volumes:
-      - './postgres/servers.json:/pgadmin4/servers.json'
-      - './postgres/pgpass:/tmp/pgpass'
-    environment:
-      - PGADMIN_DEFAULT_EMAIL=admin@example.com
-      - PGADMIN_DEFAULT_PASSWORD=admin
-    depends_on:
-      - postgresdb
-    entrypoint: sh -c "
-      mkdir -m 700 -p /var/lib/pgadmin/storage/admin_example.com
-      && cp /tmp/pgpass /var/lib/pgadmin/storage/admin_example.com/pgpass
-      && chmod 600 /var/lib/pgadmin/storage/admin_example.com/pgpass
-      && /entrypoint.sh"
+      MOODLE_DBUSER: moodle
+      MOODLE_DBNAME: moodle
+      MOODLE_DBPASSWORD: "m@0dl3ing"
+      MOODLE_DBPORT: 3306
   moodle:
     build:
       context: ./moodle
@@ -39,10 +24,10 @@ services:
         - MOODLE_VERSION=v4.3.0
     environment:
       - MOODLE_DBTYPE=pgsql
-      - MOODLE_DBHOST=postgresdb
+      - MOODLE_DBHOST=mariadb
       - MOODLE_DBNAME=moodle
       - MOODLE_PREFIX=mdl_
-      - MOODLE_DBPORT=5432
+      - MOODLE_DBPORT=3306
       - MOODLE_DBUSER=root
       - MOODLE_DBPASSWORD=root
       - MOODLE_WWWROOT_URL=http://localhost:8080
@@ -56,4 +41,4 @@ services:
       - './container-volumes/phpunitdata_data:/var/www/phpunitdata'
       - '..:/var/www/html/local/devcontainersample:cached' # Workspace directory in the container. /var/www/html/${plugin_type}/${plugin_root_directory}
     depends_on:
-      - postgresdb
+      - mariadb

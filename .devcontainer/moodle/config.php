@@ -8,7 +8,7 @@ $CFG->dbhost = getenv('MOODLE_DBHOST');
 $CFG->dbname = getenv('MOODLE_DBNAME');
 $CFG->dbuser = getenv('MOODLE_DBUSER');
 $CFG->dbpass = getenv('MOODLE_DBPASSWORD');
-$CFG->prefix = getenv('MOODLE_PREFIX');
+$CFG->prefix = 'mdl_';
 $CFG->dboptions = array(
     'dbport' => getenv('MOODLE_DBPORT'),
     );
