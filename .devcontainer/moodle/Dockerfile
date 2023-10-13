@@ -25,8 +25,8 @@ RUN echo "${TZ}" > /etc/timezone \
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 
 # Install xdebug & moodle
-RUN pecl install xdebug-3.0.4 \
-    && docker-php-ext-enable xdebug
+# RUN pecl install xdebug-3.0.4 \
+#   && docker-php-ext-enable xdebug
 
 USER www-data
 
