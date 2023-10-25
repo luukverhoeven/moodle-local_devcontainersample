@@ -4,32 +4,34 @@ services:
     image: 'mailhog/mailhog'
     ports:
       - '8025:8025'
-  mariadb:
+  db:
     image: mariadb:10.7
+    ports:
+      - "3308:3306"
     command: >
-              --character-set-server=utf8mb4
-              --collation-server=utf8mb4_bin
-              --innodb_file_per_table=On
-              --wait-timeout=28800
-              --skip-log-bin
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_bin
+      --innodb_file_per_table=On
+      --wait-timeout=28800
+      --skip-log-bin
     environment:
-      MOODLE_DBUSER: moodle
-      MOODLE_DBNAME: moodle
-      MOODLE_DBPASSWORD: "m@0dl3ing"
-      MOODLE_DBPORT: 3306
+      MARIADB_ROOT_PASSWORD: password
+      MARIADB_DATABASE: moodle
+      MARIADB_USER: moodle
+      MARIADB_PASSWORD: password
   moodle:
     build:
       context: ./moodle
       args:
         - MOODLE_VERSION=v4.3.0
     environment:
-      - MOODLE_DBTYPE=pgsql
-      - MOODLE_DBHOST=mariadb
+      - MOODLE_DBTYPE=mariadb
+      - MOODLE_DBHOST=db
       - MOODLE_DBNAME=moodle
       - MOODLE_PREFIX=mdl_
       - MOODLE_DBPORT=3306
-      - MOODLE_DBUSER=root
-      - MOODLE_DBPASSWORD=root
+      - MOODLE_DBUSER=moodle
+      - MOODLE_DBPASSWORD=password
       - MOODLE_WWWROOT_URL=http://localhost:8080
       - MOODLE_SMTPHOSTS=mailhog:1025
     ports:
@@ -41,4 +43,4 @@ services:
       - './container-volumes/phpunitdata_data:/var/www/phpunitdata'
       - '..:/var/www/html/local/devcontainersample:cached' # Workspace directory in the container. /var/www/html/${plugin_type}/${plugin_root_directory}
     depends_on:
-      - mariadb
+      - db
