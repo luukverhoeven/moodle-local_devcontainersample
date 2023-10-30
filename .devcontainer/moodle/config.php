@@ -9,9 +9,11 @@ $CFG->dbname = getenv('MOODLE_DBNAME');
 $CFG->dbuser = getenv('MOODLE_DBUSER');
 $CFG->dbpass = getenv('MOODLE_DBPASSWORD');
 $CFG->prefix = 'mdl_';
-$CFG->dboptions = array(
+$CFG->dboptions = [
+    'dbpersist' => 0,
     'dbport' => getenv('MOODLE_DBPORT'),
-    );
+    'dbsocket' => '',
+];
 $CFG->wwwroot = getenv('MOODLE_WWWROOT_URL');
 $CFG->dirroot = '/var/www/html';
 $CFG->dataroot = '/var/www/moodledata';
