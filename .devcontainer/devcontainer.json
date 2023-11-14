@@ -2,8 +2,8 @@
     "name": "moodle",
     "dockerComposeFile": "docker-compose.yml",
     "service": "moodle",
-    "workspaceFolder": "/var/www/html/local/devcontainersample", // Workspace directory in the container. /var/www/html/${plugin_type}/${plugin_root_directory}
-    "postCreateCommand": "chmod -R a+x scripts && scripts/fixmoodleowner.sh && composer install",
+    "workspaceFolder": "/var/www/html/",
+    "postCreateCommand": "",
     "extensions": [
         "editorconfig.editorconfig",
         "wongjn.php-sniffer",

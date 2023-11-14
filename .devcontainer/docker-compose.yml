@@ -37,6 +37,7 @@ services:
     ports:
       - '8080:80'
     volumes:
+      - './scripts/fixmoodleowner.sh:/fixmoodleowner.sh'
       - './moodle/php.ini:/usr/local/etc/php/php.ini'
       - './moodle/config.php:/var/www/html/config.php'
       - './container-volumes/moodledata_data:/var/www/moodledata'
@@ -44,3 +45,4 @@ services:
       - '..:/var/www/html/local/devcontainersample' # Workspace directory in the container. /var/www/html/${plugin_type}/${plugin_root_directory}
     depends_on:
       - db
+    command: /fixmoodleowner.sh && cd /var/www/html/ && composer install
