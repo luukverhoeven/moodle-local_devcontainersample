@@ -14,7 +14,14 @@ $CFG->dboptions = [
     'dbport' => getenv('MOODLE_DBPORT'),
     'dbsocket' => '',
 ];
-$CFG->wwwroot = getenv('MOODLE_WWWROOT_URL');
+
+// echo '<pre>';print_r($_SERVER);echo '</pre>';die(__LINE__.' '.__FILE__);
+
+$CFG->reverseproxy = true;
+$CFG->sslproxy  = 1;
+$CFG->loginsloginhttps = true;
+
+$CFG->wwwroot = 'https://'.$_SERVER['HTTP_X_FORWARDED_HOST'];
 $CFG->dirroot = '/var/www/html';
 $CFG->dataroot = '/var/www/moodledata';
 $CFG->unicodedb = true;
